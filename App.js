@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, ActivityIndicator} from 'react-native';
 import Weather from "./Weather";
 
+const API_KEY = '52ca9a7575667779bdbaac151c103d10'
 export default class App extends Component {
   state = {
     isLoaded: false,
-    error: null
+    error: null,
+    temperature: null,
+    name: null
   };
   componentDidMount(){
     navigator.geolocation.getCurrentPosition(
     position => {
-      this.setState({
-        // isLoaded: true
-        error: "somthing error"
-      });
+      this._getWeather(position.coords.latitude, position.coords.longitude);
     },
     error => {
       this.setState({
@@ -22,6 +22,20 @@ export default class App extends Component {
 
     });
   }
+  _getWeather = (lat, lon) => {
+    fetch(
+      'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+API_KEY
+      )
+    .then(response => response.json())
+    .then(json => {
+      this.setState({
+        temperature:json.main.temp,
+        name:json.weather[0].main,
+        isLoaded:true,
+      })
+    })
+  }
+
   render() {
     const { isLoaded, error } = this.state;
     return (
