@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, ActivityIndicator} from 'react-native';
 import Weather from "./Weather";
 
-const API_KEY = '52ca9a7575667779bdbaac151c103d10'
 export default class App extends Component {
   state = {
     isLoaded: false,
@@ -24,7 +23,7 @@ export default class App extends Component {
   }
   _getWeather = (lat, lon) => {
     fetch(
-      'http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+API_KEY
+      'https://devcho.herokuapp.com/weather?lat='+lat+'&lon='+lon
       )
     .then(response => response.json())
     .then(json => {
