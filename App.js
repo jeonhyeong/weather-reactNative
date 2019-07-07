@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, ActivityIndicator} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, View, StatusBar} from 'react-native';
 import Weather from "./Weather";
 
-export default class App extends Component {
+export default class App extends React.Component {
   state = {
     isLoaded: false,
     error: null,
@@ -12,19 +12,18 @@ export default class App extends Component {
   componentDidMount(){
     navigator.geolocation.getCurrentPosition(
     position => {
-      this._getWeather(position.coords.latitude, position.coords.longitude);
+      this.getWeather(position.coords.latitude, position.coords.longitude);
     },
     error => {
       this.setState({
         error:error
       })
-
     });
   }
-  _getWeather = (lat, lon) => {
+  getWeather = (lat, lon) => {
     fetch(
       'https://devcho.herokuapp.com/weather?lat='+lat+'&lon='+lon
-      )
+    )
     .then(response => response.json())
     .then(json => {
       this.setState({
@@ -36,15 +35,14 @@ export default class App extends Component {
   }
 
   render() {
-    const { isLoaded, error, temperature, name} = this.state;
+    const {isLoaded, error, temperature, name} = this.state;
     return (
       <View style={styles.container}>
-        <StatusBar hidden={true} />
         {isLoaded ? (
           <Weather weatherName={name} temp={Math.floor(temperature - 273.15)}/>
         ) : (
           <View style={styles.loading}>
-            <Text style={styles.loadingText}>Getting the weather</Text>
+            <Text style={styles.loadingText}>Getting the weather..</Text>
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
           </View>
         )}
@@ -65,11 +63,11 @@ const styles = StyleSheet.create({
   loading: {
     flex: 1,
     backgroundColor: '#FDF6AA',
-    justifyContent: "flex-end",
-    paddingLeft: 50,
+    justifyContent: "center",
+    alignItems:"center"
   },
   loadingText:{
+    color:"red",
     fontSize: 30,
-    marginBottom: 40,
   }
 });

@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo';
-import { MaterialCommunityIcons } from "@expo/vector-icons"
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {LinearGradient} from 'expo';
+import {MaterialCommunityIcons} from "@expo/vector-icons"
 import PropTypes from "prop-types"
 
 const weatherCases = {
@@ -55,12 +55,9 @@ const weatherCases = {
     }
 }
 
-function Weather({ weatherName, temp }) {
+function Weather({weatherName, temp}) {
     return(
-        <LinearGradient 
-            colors={weatherCases[weatherName].colors}
-            style={styles.container}
-            >
+        <LinearGradient colors={weatherCases[weatherName].colors} style={styles.container}>
             <View style={styles.upper}>
                 <MaterialCommunityIcons color="white" size={144} name={weatherCases[weatherName].icon}/>
                 <Text style={styles.temp}>{temp}℃</Text>
@@ -94,25 +91,21 @@ const styles = StyleSheet.create({
         fontSize: 48,
         backgroundColor: "transparent",
         color: "white",
-        marginBottom: 10
     },
     lower:{
         flex:1,
-        alignItems: "flex-start",
-        justifyContent: "flex-end",
+        alignItems: "center",
+        justifyContent: "center",
         paddingLeft: 25,
     },
     title:{
         fontSize: 30,
         backgroundColor: "transparent",
         color: "white",
-        marginBottom: 10,
-        fontWeight: "300"
     },
     subtitle:{
         fontSize: 24,
         backgroundColor: "transparent",
         color: "white",
-        marginBottom: 24
     }
 })
